@@ -17,13 +17,15 @@ class Student:
             return 'Ошибка'
         
 class Mentor:
-    def __init__(self, name, surname):
+    def __init__(self, name, surname, courses_attached = [] ):
         self.name = name
         self.surname = surname
-        self.courses_attached = []
+        self.courses_attached = courses_attached
 
 class Lecturer(Mentor):
-    grades = {}
+    def __init__(self, name, surname):
+        super().__init__(name, surname, courses_attached = [] )
+        self.grades = {}
 
 class Reviewer(Mentor):
     def rate_hw(self, student, course, grade):
@@ -37,6 +39,8 @@ class Reviewer(Mentor):
  
 best_student = Student('Harry', 'Markovskiy', 'male')
 best_student.courses_in_progress += ['Python']
+best_student.courses_in_progress += ['Django', 'Soft Skills']
+print(best_student.courses_in_progress)
  
 cool_reviewer = Reviewer('Christopher', 'Robin')
 cool_reviewer.courses_attached += ['Python']
@@ -51,8 +55,21 @@ cool_reviewer.rate_hw(best_student, 'Python', 10)
 cool_reviewer.rate_hw(best_student, 'Python', 10)
 cool_reviewer.rate_hw(best_student, 'Python', 10)
 
+best_student.rate_lec(cool_lecturer, 'Django', 10)
+best_student.rate_lec(cool_lecturer, 'Django', 7)
+
+
+best_student.rate_lec(bad_lecturer, 'Soft Skills', 1)
+best_student.rate_lec(bad_lecturer, 'Soft Skills', 3)
+
 print(f"\nСтудент {best_student.name} {best_student.surname}")
 print(f"Домашнюю работу проверял {cool_reviewer.name} {cool_reviewer.surname}")
 print(best_student.grades)
 
-print(f"\nЛучший лектор {cool_lecturer.name} {cool_lecturer.surname}") 
+print(f"\nЛучший лектор {cool_lecturer.name} {cool_lecturer.surname}")
+print(cool_lecturer.courses_attached)
+print(cool_lecturer.grades)
+
+print(f"\nТак себе лектор {bad_lecturer.name} {bad_lecturer.surname}")
+print(bad_lecturer.courses_attached)
+print(bad_lecturer.grades)
